@@ -99,3 +99,16 @@ exports.hapusMahasiswa = function(req, res){
         }
     )
 }
+
+//menampilkan matakuliah group
+exports.tampilgroupmatakuliah = function(req, res){
+    connection.query("select mhs.id_mahasiswa, mhs.nim, mhs.nama, mhs.jurusan, mk.matakuliah, mk.sks from krs inner join mahasiswa mhs on krs.id_mahasiswa = mhs.id_mahasiswa inner join matakuliah mk on krs.id_matakuliah = mk.id_matakuliah order by mhs.id_mahasiswa",
+        function(error, rows, fields){
+            if(error) {
+                console.log(error);
+            } else {
+                response.oknested(rows.rows, res);
+            }
+        }
+    );     
+}

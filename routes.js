@@ -23,4 +23,7 @@ module.exports = function(app){
     
     app.route('/delete/:id')
         .delete(jsonku.hapusMahasiswa);
+
+    app.route('/tampilmatakuliah')
+        .get(jsonku.tampilgroupmatakuliah);
 }
