@@ -14,4 +14,13 @@ module.exports = function(app){
     
     app.route('/tambah')
         .post(jsonku.tambahMahasiswa);
+    
+    app.route('/ubah')
+        .put(jsonku.ubahMahasiswa);
+    
+    app.route('/ubah/:id')
+        .put(jsonku.ubahMahasiswaid);
+    
+    app.route('/delete/:id')
+        .delete(jsonku.hapusMahasiswa);
 }

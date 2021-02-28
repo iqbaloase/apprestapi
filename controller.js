@@ -49,3 +49,53 @@ exports.tambahMahasiswa = function(req, res) {
         }
     );
 }
+
+//mengubah data berdasarkan id
+
+exports.ubahMahasiswa = function(req, res){
+    let id = req.body.id_mahasiswa;
+    let nim = req.body.nim;
+    let nama = req.body.nama;
+    let jurusan = req.body.jurusan;
+
+    connection.query('UPDATE mahasiswa set nim = $1, nama = $2, jurusan = $3 where id_mahasiswa = $4', [nim, nama, jurusan, id],
+        function(error, rows, fields){
+            if(error){
+                console.log(error);
+            } else {
+                response.ok('Berhasil ubah data', res);
+            }
+        }
+    );
+}
+
+exports.ubahMahasiswaid = function(req, res){
+    let { id } = req.params;
+    let nim = req.body.nim;
+    let nama = req.body.nama;
+    let jurusan = req.body.jurusan;
+
+    connection.query('UPDATE mahasiswa set nim = $1, nama = $2, jurusan = $3 where id_mahasiswa = $4', [nim, nama, jurusan, id],
+        function(error, rows, fields){
+            if(error){
+                console.log(error);
+            } else {
+                response.ok('Berhasil ubah data', res);
+            }
+        }
+    );
+}
+
+//menghapus data berdasarkan id
+exports.hapusMahasiswa = function(req, res){
+    let { id } = req.params;
+    connection.query('DELETE FROM mahasiswa WHERE id_mahasiswa = $1', [id],
+        function(error, rows, fields){
+            if(error){
+                console.log(error);
+            } else {
+                response.ok('Berhasil delete data', res);
+            }
+        }
+    )
+}
