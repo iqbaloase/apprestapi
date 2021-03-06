@@ -12,24 +12,19 @@ exports.registrasi = function(req, res){
         username: req.body.username,
         email: req.body.email,
         password: md5(req.body.password),
-        role = req.body.role,
+        role: req.body.role,
         tanggal_daftar: new Date()
     }
 
-    var query = 'SELECT email FROM $1 WHERE $2';
-    var table = ['user', 'email', post.email];
-
-    query = pg.format(query, table);
-
-    connection.query(query, function(error, rows){
+    var query = 'SELECT email FROM public.user WHERE email = $1';
+    
+    connection.query(query, [post.email], function(error, rows){
         if(error){
             console.log(error);
         } else {
             if(rows.rows.length == 0){
-                var query = "INSERT INTO $1 SET $2";
-                var table = ['user'];
-                query = pg.format(query, table);
-                connection.query(query, post, function(error, rows){
+                var query = "INSERT INTO public.user(username, email, password, role, tanggal_daftar) values($1, $2, $3, $4, $5) ";
+                connection.query(query, [post.username, post.email, post.password, post.role, post.tanggal_daftar], function(error, rows){
                     if(error){
                         console.log(error);
                     } else {
@@ -37,7 +32,7 @@ exports.registrasi = function(req, res){
                     }
                 });
             } else {
-                response.ok('email sudah terdaftar');
+                response.ok('email sudah terdaftar', res);
             }
         }
     })
